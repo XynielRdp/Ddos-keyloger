@@ -1,0 +1,37 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Website By danielzzz</title>
+  </head>
+  <body>
+    <h1>Bantai keyloger sampah</h1>
+    <form id="webhook-form">
+      <input type="text" id="pesan" placeholder="input ddos keyloger">
+      <button id="kirim">Kirim</button>
+    </form>
+
+    <script>
+      const form = document.getElementById('webhook-form');
+      const webhookUrl = 'https://discord.com/api/webhooks/1322248748423839824/BlezM3WBcxO0puExkLwtfSoyM9-Qtyf3KlA-Ekgnq8NYePk4T4jOGPoQJplilSS6V1tr';
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const pesan = document.getElementById('pesan').value;
+
+        fetch(webhookUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            content: pesan,
+          }),
+        })
+        .then((res) => res.json())
+        .then((data) => console.log(data))
+        .catch((err) => console.error(err));
+      });
+    </script>
+  </body>
+</html>
