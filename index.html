@@ -1,320 +1,486 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DANIEL NESIA | VIP ACCESS</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Daniel Nesia Store - Premium Portal</title>
+    <!-- Tailwind CSS v4 CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
-        
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            overflow: hidden; /* Mencegah scrollbar muncul karena partikel */
-            background: #000;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* --- ANIMASI BACKGROUND EMAS (PARTIKEL) --- */
-        #particles-js {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            background-color: #000;
-            /* Latar belakang logo Daniel Nesia tetap ada di belakang partikel */
-            background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('https://files.catbox.moe/kivdno.jpg');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            z-index: 1; /* Di bawah kartu VIP */
-        }
-
-        /* --- KARTU VIP (Sama seperti V78.0) --- */
-        .vip-card {
-            width: 95%;
-            max-width: 450px;
-            background: rgba(10, 10, 10, 0.9);
-            backdrop-filter: blur(20px);
-            border: 2px solid #d4af37; /* Gold Border */
-            border-radius: 20px;
-            padding: 35px 25px;
-            box-shadow: 0 0 40px rgba(212, 175, 55, 0.3);
-            position: relative;
-            overflow: hidden;
-            z-index: 10; /* Di atas partikel */
-        }
-
-        /* Hiasan emas di pojok (V78.0) */
-        .vip-card::before {
-            content: ""; position: absolute; top: 0; left: 0;
-            width: 50px; height: 50px;
-            border-top: 4px solid #d4af37; border-left: 4px solid #d4af37;
-        }
-
-        .vip-card::after {
-            content: ""; position: absolute; bottom: 0; right: 0;
-            width: 50px; height: 50px;
-            border-bottom: 4px solid #d4af37; border-right: 4px solid #d4af37;
-        }
-
-        .vip-header {
-            font-family: 'Cinzel', serif;
-            color: #d4af37;
-            text-align: center;
-            font-weight: 900;
-            font-size: 1.8rem;
-            letter-spacing: 4px;
-            margin-bottom: 5px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-        }
-
-        .vip-badge {
-            display: block;
-            text-align: center;
-            color: #fff;
-            font-size: 0.6rem;
-            letter-spacing: 5px;
-            margin-bottom: 30px;
-            text-transform: uppercase;
-            font-weight: 800;
-            opacity: 0.7;
-        }
-
-        .form-label { 
-            font-size: 0.8rem;
-            font-weight: 800;
-            color: #d4af37 !important; /* Gold terang */
-            text-transform: uppercase;
-            margin-bottom: 8px;
-            display: block;
-            text-shadow: 1px 1px 2px #000;
-        }
-
-        .form-control, .form-select {
-            background: rgba(255, 255, 255, 0.05) !important;
-            border: 1px solid rgba(212, 175, 55, 0.3) !important;
-            color: #fff !important;
-            border-radius: 10px;
-            padding: 12px 15px;
-            margin-bottom: 20px;
-            transition: 0.3s;
-        }
-
-        .form-control::placeholder {
-            color: rgba(255, 255, 255, 0.3);
-        }
-
-        .form-control:focus, .form-select:focus {
-            border-color: #d4af37 !important;
-            background: rgba(255, 255, 255, 0.1) !important;
-            box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
-            color: #fff !important;
-        }
-
-        .price-tag {
-            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.15), transparent);
-            padding: 15px;
-            border-radius: 10px;
-            text-align: center;
-            margin-bottom: 25px;
-            border: 1px solid rgba(212, 175, 55, 0.2);
-        }
-
-        .price-tag span {
-            color: #888;
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            font-weight: 700;
-        }
-
-        .price-tag h2 {
-            color: #fff;
-            font-weight: 900;
-            margin: 0;
-            font-family: 'Cinzel', serif;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-        }
-
-        .btn-vip {
-            width: 100%;
-            background: #d4af37; /* Pure Gold */
-            color: #000;
-            font-weight: 900;
-            padding: 16px;
-            border-radius: 12px;
-            border: none;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: 0.3s;
-        }
-
-        .btn-vip:hover {
-            background: #fff;
-            transform: translateY(-3px);
-            box-shadow: 0 15px 30px rgba(212, 175, 55, 0.5);
-        }
-
-        .footer-note {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 0.65rem;
-            color: #555;
-            text-transform: uppercase;
+        .app-view { display: none; }
+        .app-view.active { display: block; }
+        .bg-luxury { background: radial-gradient(circle at top right, #1e293b 0%, #0f172a 100%); }
+        .card-luxury {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.7) 0%, rgba(15, 23, 42, 0.8) 100%);
+            border: 1px solid rgba(217, 119, 6, 0.2);
         }
     </style>
 </head>
-<body>
+<body class="bg-luxury text-slate-100 font-sans min-h-screen antialiased">
 
-<div id="particles-js"></div>
+    <!-- ==================== 1. FORM AUTH (LOGIN & REGISTER) ==================== -->
+    <div id="view-auth" class="app-view active max-w-md mx-auto mt-20 p-8 bg-slate-900/80 rounded-2xl border border-amber-500/20 shadow-2xl backdrop-blur-md space-y-6">
+        <div class="text-center">
+            <h1 class="text-3xl font-extrabold text-amber-500 tracking-wider">DANIEL NESIA STORE</h1>
+            <p class="text-center text-slate-400 text-xs uppercase tracking-widest mt-1">Premium Capital & Digital Platform</p>
+            <p id="auth-title" class="text-sm text-gray-400 mt-3">Silahkan masuk ke akun Anda</p>
+        </div>
 
-<div class="vip-card">
-    <div class="vip-header">DANIEL NESIA</div>
-    <span class="vip-badge">Aktivasi Panel VIP</span>
+        <div class="space-y-4">
+            <div>
+                <label class="block text-xs font-semibold uppercase tracking-wider text-amber-400/80 mb-1">Username ID</label>
+                <input type="text" id="auth-username" placeholder="Masukkan username" class="w-full bg-slate-800 text-white border border-slate-700 p-3 rounded-xl focus:ring-2 focus:ring-amber-500 focus:outline-none">
+            </div>
+            <div>
+                <label class="block text-xs font-semibold uppercase tracking-wider text-amber-400/80 mb-1">Password Secure</label>
+                <input type="password" id="auth-password" placeholder="Masukkan password" class="w-full bg-slate-800 text-white border border-slate-700 p-3 rounded-xl focus:ring-2 focus:ring-amber-500 focus:outline-none">
+            </div>
 
-    <div class="price-tag">
-        <span>Amount to Pay</span>
-        <h2 id="totalPrice">Rp 0</h2>
+            <button id="btn-primary-auth" class="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-950 font-bold py-3 rounded-xl transition-all shadow-lg shadow-amber-500/20 uppercase tracking-wider text-sm cursor-pointer mt-2">
+                Masuk ke Akun
+            </button>
+        </div>
+
+        <div class="text-center text-sm border-t border-slate-800 pt-4">
+            <p id="auth-switch-text" class="text-gray-400">
+                Belum bergabung? 
+                <button id="btn-switch-auth" class="text-amber-400 font-semibold hover:underline cursor-pointer">Daftar Akun Baru</button>
+            </p>
+        </div>
     </div>
 
-    <div class="mb-1">
-        <label class="form-label"><i class="fas fa-user-edit me-2"></i>Nama Lengkap</label>
-        <input type="text" id="nama" class="form-control" placeholder="Input nama anda">
+
+    <!-- ==================== 2. SCREEN DASHBOARD USER ==================== -->
+    <div id="view-user-dashboard" class="app-view space-y-6">
+        <nav class="bg-slate-900/90 shadow-xl border-b border-amber-500/10 py-4 px-6 flex justify-between items-center sticky top-0 backdrop-blur-md z-50">
+            <span class="text-2xl font-black text-amber-500 tracking-wider">DANIEL NESIA<span class="text-white font-light">.STORE</span></span>
+            <div class="flex items-center gap-4">
+                <span class="text-xs bg-amber-500/10 text-amber-400 border border-amber-500/30 px-3 py-1 rounded-full font-medium uppercase tracking-widest">VIP Member</span>
+                <span class="text-sm text-gray-300 bg-slate-800 px-3 py-1 rounded-xl">User: <b id="display-user-name" class="text-amber-400"></b></span>
+                <button class="btn-logout text-xs bg-red-950 hover:bg-red-900 text-red-200 border border-red-500/30 px-3 py-1.5 rounded-xl transition-all cursor-pointer">Keluar</button>
+            </div>
+        </nav>
+
+        <main class="max-w-7xl mx-auto p-6 space-y-8">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div class="card-luxury p-6 rounded-2xl flex flex-col justify-between shadow-2xl">
+                    <div>
+                        <p class="text-xs font-semibold uppercase tracking-widest text-amber-400/70">Total Saldo Dompet (RDN)</p>
+                        <p id="balance-display" class="text-3xl font-black text-white mt-2 tracking-tight">Rp 0</p>
+                    </div>
+                    <div class="mt-4">
+                        <p class="text-xs font-semibold uppercase tracking-widest text-emerald-400/70">Total Aset Pembiayaan Aktif</p>
+                        <p id="asset-display" class="text-xl font-bold text-slate-200 mt-1">Rp 0</p>
+                    </div>
+                </div>
+
+                <div class="card-luxury p-6 rounded-2xl shadow-2xl lg:col-span-2 space-y-4">
+                    <h3 class="text-sm font-bold uppercase tracking-wider text-amber-400 flex items-center gap-2">✦ Panel Transaksi Keuangan</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="space-y-2">
+                            <label class="text-xs text-slate-400 uppercase tracking-wider">Nominal Rupiah (Rp)</label>
+                            <input type="number" id="tx-amount" placeholder="Minimal Rp 10.000" class="w-full px-4 py-2.5 bg-slate-900/60 border border-slate-700 rounded-xl text-white focus:outline-none focus:border-amber-500 text-sm">
+                        </div>
+                        <div class="flex items-end gap-3">
+                            <a href="https://wa.me/6285692069556?text=Halo%20Admin,%20saya%20mau%20minta%20QRIS%20untuk%20deposit" target="_blank" class="bg-amber-600 hover:bg-amber-500 text-center py-2.5 px-3 rounded-xl font-bold text-xs transition flex items-center justify-center uppercase tracking-wider text-slate-950">💬 QRIS</a>
+                            <button id="btn-deposit" class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-xl transition-all uppercase tracking-wider text-xs cursor-pointer shadow-lg">Deposit</button>
+                            <button id="btn-withdraw" class="flex-1 bg-red-600 hover:bg-red-700 text-white font-bold py-2.5 rounded-xl transition-all uppercase tracking-wider text-xs cursor-pointer shadow-lg">Withdraw</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-luxury p-6 rounded-2xl shadow-lg">
+                <h2 class="text-sm font-bold mb-3 text-amber-400 uppercase tracking-wider">📂 Pengaturan Rekening Pencairan</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <input type="text" id="user-bank-name" placeholder="Nama Bank / E-Wallet (e.g. DANA, BCA)" class="bg-slate-800 text-white border border-slate-700 p-3 rounded-xl text-sm focus:outline-none">
+                    <input type="text" id="user-bank-acc" placeholder="Nomor Rekening / No. HP" class="bg-slate-800 text-white border border-slate-700 p-3 rounded-xl text-sm focus:outline-none">
+                    <button id="btn-save-bank" class="bg-amber-500 hover:bg-amber-600 text-slate-950 py-3 rounded-xl font-bold text-sm transition tracking-wider uppercase">Tautkan Rekening</button>
+                </div>
+                <p id="saved-account-info" class="mt-2 text-xs text-gray-400 italic">Status: Belum terkait.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div class="card-luxury p-6 rounded-2xl shadow-2xl lg:col-span-1">
+                    <h3 class="text-sm font-bold uppercase tracking-wider text-amber-400 mb-4">💎 Produk Pembiayaan Sektor Riil</h3>
+                    <div id="product-list" class="space-y-3"></div>
+                </div>
+
+                <div class="card-luxury p-6 rounded-2xl shadow-2xl lg:col-span-2">
+                    <h3 class="text-sm font-bold uppercase tracking-wider text-amber-400 mb-4">📜 Status Pengajuan Mutasi</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left">
+                            <thead>
+                                <tr class="border-b border-slate-800 text-slate-400 text-xs uppercase tracking-wider">
+                                    <th class="pb-3">ID</th>
+                                    <th class="pb-3">Tipe</th>
+                                    <th class="pb-3">Jumlah</th>
+                                    <th class="pb-3">Detail</th>
+                                    <th class="pb-3">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="user-history-table" class="text-sm divide-y divide-slate-800"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
     </div>
 
-    <div class="mb-1">
-        <label class="form-label"><i class="fas fa-id-badge me-2"></i>Request Nama Result</label>
-        <input type="text" id="panel_id" class="form-control" placeholder="Contoh: DanzGacor">
+
+    <!-- ==================== 3. SCREEN CONTROL PANEL ADMIN ==================== -->
+    <div id="view-admin-dashboard" class="app-view space-y-6">
+        <nav class="bg-slate-900 border-b border-indigo-500/20 px-6 py-4 flex justify-between items-center shadow-lg">
+            <div>
+                <h1 class="text-lg font-bold text-indigo-400 tracking-widest">🕹️ CONTROL PANEL ADMIN</h1>
+                <p class="text-xs text-emerald-400 uppercase tracking-widest animate-pulse">● Live Realtime Stream Active</p>
+            </div>
+            <div class="flex items-center gap-4">
+                <span class="text-xs bg-indigo-950 text-indigo-300 border border-indigo-800 px-3 py-1 rounded-full font-bold">Role: <span id="display-admin-name"></span></span>
+                <button class="btn-logout bg-red-600 hover:bg-red-500 text-xs px-4 py-2 rounded-xl font-bold transition cursor-pointer">Keluar Panel</button>
+            </div>
+        </nav>
+
+        <div class="max-w-7xl mx-auto p-6">
+            <div class="bg-slate-900/80 p-6 rounded-2xl border border-slate-800 shadow-2xl">
+                <table class="w-full text-left">
+                    <thead>
+                        <tr class="border-b border-slate-800 text-slate-400 text-xs uppercase tracking-wider">
+                            <th class="p-3">ID Transaksi</th>
+                            <th class="p-3">User</th>
+                            <th class="p-3">Jenis</th>
+                            <th class="p-3">Jumlah</th>
+                            <th class="p-3 text-xs">Detail</th>
+                            <th class="p-3">Status</th>
+                            <th class="p-3 text-center">Aksi Decisions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="admin-manage-table" class="text-sm divide-y divide-slate-800"></tbody>
+                </table>
+            </div>
+        </div>
     </div>
 
-    <div class="mb-1">
-        <label class="form-label"><i class="fas fa-clock me-2"></i>Pilih Masa Aktif</label>
-        <select id="paket" class="form-select" onchange="update()">
-            <option value="0">-- KLIK UNTUK PILIH --</option>
-            <option value="1500">1 Jam (Rp 1.500)</option>
-            <option value="10000">1 Hari (Rp 10.000)</option>
-            <option value="25000">1 Minggu (Rp 25.000) 🔥</option>
-        </select>
-    </div>
 
-    <button onclick="kirimOrder()" class="btn-vip">
-        Konfirmasi Pembayaran <i class="fas fa-crown ms-2"></i>
-    </button>
+    <!-- ==================== FIREBASE REALTIME ENGINE MODULE ==================== -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getDatabase, ref, set, update, get, child, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-    <div class="footer-note">
-        Automatic Format System v80.0 &copy; Daniel Nesia ID
-    </div>
-</div>
+        const DB_URL = "https://my-invest-database-default-rtdb.asia-southeast1.firebasedatabase.app/";
+        
+        const app = initializeApp({ databaseURL: DB_URL });
+        const db = getDatabase(app, DB_URL);
 
-<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-<script>
-    /* Konfigurasi particles.js untuk efek emas mengalir */
-    particlesJS("particles-js", {
-        "particles": {
-            "number": {
-                "value": 100, /* Jumlah partikel */
-                "density": {
-                    "enable": true,
-                    "value_area": 800
+        // State Global Aplikasi
+        let dbUsers = {};
+        let dbTransactions = [];
+        let currentUser = null;
+        let isRegisterMode = false;
+
+        // Listener Unsubscribe References
+        let unsubscribeUsers = null;
+        let unsubscribeTxs = null;
+
+        const availableProducts = [
+            { id: 'PROD01', name: 'Pendanaan UMKM Gaming Toko', price: 10000, profitRate: 'Daily +1.5%' },
+            { id: 'PROD02', name: 'Konsolidasi Modal Hosting Server', price: 50000, profitRate: 'Daily +2.0%' },
+            { id: 'PROD03', name: 'Sektor Riil Tournament Organizer', price: 100000, profitRate: 'Daily +2.5%' }
+        ];
+
+        function openView(viewId) {
+            document.querySelectorAll('.app-view').forEach(v => v.classList.remove('active'));
+            document.getElementById(viewId).classList.add('active');
+        }
+
+        // Event Listeners Auth
+        document.getElementById('btn-primary-auth').addEventListener('click', handleAuthAction);
+        document.getElementById('btn-switch-auth').addEventListener('click', () => {
+            isRegisterMode = !isRegisterMode;
+            const title = document.getElementById('auth-title');
+            const btn = document.getElementById('btn-primary-auth');
+            const switchBtn = document.getElementById('btn-switch-auth');
+
+            if (isRegisterMode) {
+                title.innerText = "Buat akun pelanggan baru Anda";
+                btn.innerText = "Daftar Akun Baru";
+                switchBtn.innerText = "Login disini";
+            } else {
+                title.innerText = "Silahkan masuk ke akun Anda";
+                btn.innerText = "Masuk ke Akun";
+                switchBtn.innerText = "Daftar Akun Baru";
+            }
+        });
+
+        document.querySelectorAll('.btn-logout').forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Hentikan stream ketika log out agar menghemat bandwidth
+                if(unsubscribeUsers) unsubscribeUsers();
+                if(unsubscribeTxs) unsubscribeTxs();
+                currentUser = null;
+                openView('view-auth');
+            });
+        });
+
+        document.getElementById('btn-deposit').addEventListener('click', () => processFinance('Deposit'));
+        document.getElementById('btn-withdraw').addEventListener('click', () => processFinance('Withdrawal'));
+        document.getElementById('btn-save-bank').addEventListener('click', savePaymentMethod);
+
+        // Logika Autentikasi
+        function handleAuthAction() {
+            const userIn = document.getElementById('auth-username').value.trim();
+            const passIn = document.getElementById('auth-password').value.trim();
+
+            if (!userIn || !passIn) { alert('Harap isi form!'); return; }
+
+            if ((userIn === 'daniladmin' && passIn === '1') || (userIn === 'hanadmin' && passIn === '1')) {
+                currentUser = { username: userIn, role: 'admin' };
+                document.getElementById('display-admin-name').innerText = userIn;
+                openView('view-admin-dashboard');
+                startRealtimeStreams(); // Nyalakan stream data
+                return;
+            }
+
+            const dbRef = ref(db);
+            
+            if (isRegisterMode) {
+                get(child(dbRef, `users/${userIn}`)).then((snapshot) => {
+                    if (snapshot.exists()) {
+                        alert('Username sudah terpakai!');
+                    } else {
+                        set(ref(db, `users/${userIn}`), {
+                            password: passIn,
+                            balance: 0,
+                            activeAssets: 0
+                        }).then(() => {
+                            alert('Pendaftaran sukses! Silahkan Login.');
+                            isRegisterMode = false;
+                            document.getElementById('auth-title').innerText = "Silahkan masuk ke akun Anda";
+                            document.getElementById('btn-primary-auth').innerText = "Masuk ke Akun";
+                            document.getElementById('btn-switch-auth').innerText = "Daftar Akun Baru";
+                        }).catch(err => alert("Gagal Simpan User: " + err.message));
+                    }
+                }).catch(err => alert("Koneksi Firebase Error: " + err.message));
+            } else {
+                get(child(dbRef, `users/${userIn}`)).then((snapshot) => {
+                    if (snapshot.exists()) {
+                        const userData = snapshot.val();
+                        if (userData.password === passIn) {
+                            currentUser = {
+                                username: userIn,
+                                role: 'user',
+                                balance: userData.balance || 0,
+                                activeAssets: userData.activeAssets || 0
+                            };
+                            document.getElementById('display-user-name').innerText = userIn;
+                            openView('view-user-dashboard');
+                            startRealtimeStreams(); // Nyalakan stream data
+                            renderProductList();
+                        } else {
+                            alert('Password salah!');
+                        }
+                    } else {
+                        alert('Akun tidak ditemukan!');
+                    }
+                }).catch(err => alert("Koneksi Firebase Error: " + err.message));
+            }
+        }
+
+        // ==================== ENGINE REALTIME SYNC (GARANSI JALAN DI GITHUB) ====================
+        function startRealtimeStreams() {
+            // 1. Sinkronisasi Data Users
+            unsubscribeUsers = onValue(ref(db, 'users'), (snapshot) => {
+                dbUsers = snapshot.val() || {};
+                if (currentUser && currentUser.role === 'user' && dbUsers[currentUser.username]) {
+                    currentUser.balance = dbUsers[currentUser.username].balance || 0;
+                    currentUser.activeAssets = dbUsers[currentUser.username].activeAssets || 0;
+                    document.getElementById('balance-display').innerText = `Rp ${currentUser.balance.toLocaleString()}`;
+                    document.getElementById('asset-display').innerText = `Rp ${currentUser.activeAssets.toLocaleString()}`;
+                    
+                    const info = document.getElementById('saved-account-info');
+                    const uBank = dbUsers[currentUser.username].bankAccount;
+                    info.innerHTML = uBank ? `✅ Terikat: <span class="text-emerald-400 font-bold">${uBank.bank}</span> (${uBank.number})` : `⚠️ Belum dikaitkan.`;
                 }
-            },
-            "color": {
-                "value": "#d4af37" /* Warna Emas */
-            },
-            "shape": {
-                "type": "circle", /* Bentuk lingkaran pelan */
-                "stroke": {
-                    "width": 0,
-                    "color": "#000000"
+                if (currentUser && currentUser.role === 'admin') {
+                    renderAdminTable();
                 }
-            },
-            "opacity": {
-                "value": 0.5,
-                "random": true,
-                "anim": {
-                    "enable": true,
-                    "speed": 1,
-                    "opacity_min": 0.1,
-                    "sync": false
+            });
+
+            // 2. Sinkronisasi Data Transaksi (Membaca Request Orang Lain Secara Otomatis)
+            unsubscribeTxs = onValue(ref(db, 'transactions'), (snapshot) => {
+                const data = snapshot.val() || {};
+                dbTransactions = [];
+                Object.keys(data).forEach(key => {
+                    dbTransactions.push({ id: key, ...data[key] });
+                });
+                dbTransactions.sort((a, b) => b.timestamp - a.timestamp);
+
+                if (currentUser) {
+                    if (currentUser.role === 'admin') {
+                        renderAdminTable();
+                    } else {
+                        renderUserTable();
+                    }
                 }
-            },
-            "size": {
-                "value": 3,
-                "random": true,
-                "anim": {
-                    "enable": true,
-                    "speed": 2,
-                    "size_min": 0.1,
-                    "sync": false
+            });
+        }
+
+        function processFinance(type) {
+            const amountInput = document.getElementById('tx-amount');
+            const amount = parseInt(amountInput.value);
+
+            if (!amount || amount < 10000) { alert('Minimal Rp 10.000!'); return; }
+
+            if (type === 'Withdrawal') {
+                if (!dbUsers[currentUser.username]?.bankAccount) { alert('Tautkan rekening dulu!'); return; }
+                if (currentUser.balance < amount) { alert('Saldo tidak cukup!'); return; }
+            }
+
+            const customTxId = 'TX-' + (type === 'Deposit' ? 'DEP-' : 'WD-') + Date.now().toString().slice(-4);
+            const detailText = type === 'Deposit' ? 'Virtual QRIS Gateway' : dbUsers[currentUser.username].bankAccount.bank;
+
+            set(ref(db, `transactions/${customTxId}`), {
+                user: currentUser.username,
+                type: type,
+                amount: amount,
+                detail: detailText,
+                status: 'Pending',
+                timestamp: Date.now()
+            }).then(() => {
+                alert(`Pengajuan ${type} berhasil dikirim!`);
+                amountInput.value = '';
+            }).catch(err => alert("Gagal Kirim Transaksi: " + err.message));
+        }
+
+        function savePaymentMethod() {
+            const bank = document.getElementById('user-bank-name').value.trim();
+            const number = document.getElementById('user-bank-acc').value.trim();
+            if (!bank || !number) { alert('Isi data dengan lengkap!'); return; }
+
+            update(ref(db, `users/${currentUser.username}`), {
+                bankAccount: { bank, number }
+            }).then(() => {
+                alert('Rekening berhasil diikat!');
+                document.getElementById('user-bank-name').value = '';
+                document.getElementById('user-bank-acc').value = '';
+            }).catch(err => alert("Gagal Ikat Rekening: " + err.message));
+        }
+
+        function renderProductList() {
+            const pList = document.getElementById('product-list');
+            pList.innerHTML = '';
+            availableProducts.forEach(prod => {
+                const item = document.createElement('div');
+                item.className = "bg-slate-900/60 p-4 rounded-xl border border-slate-800 flex justify-between items-center gap-2";
+                item.innerHTML = `<div><p class="text-sm font-bold text-slate-200">${prod.name}</p><p class="text-xs text-amber-400 font-semibold">${prod.profitRate}</p><p class="text-xs text-slate-400">Rp ${prod.price.toLocaleString()}</p></div>`;
+                
+                const btn = document.createElement('button');
+                btn.className = "bg-amber-500 hover:bg-amber-600 text-slate-950 text-xs font-bold px-3 py-2 rounded-lg transition-all cursor-pointer";
+                btn.innerText = "Beli";
+                btn.addEventListener('click', () => buyProduct(prod));
+                
+                item.appendChild(btn);
+                pList.appendChild(item);
+            });
+        }
+
+        function buyProduct(product) {
+            if (currentUser.balance < product.price) { alert('Saldo tidak cukup!'); return; }
+
+            update(ref(db, `users/${currentUser.username}`), {
+                balance: (dbUsers[currentUser.username].balance || 0) - product.price,
+                activeAssets: (dbUsers[currentUser.username].activeAssets || 0) + product.price
+            }).then(() => {
+                const invId = 'INV-' + Date.now().toString().slice(-4);
+                set(ref(db, `transactions/${invId}`), {
+                    user: currentUser.username,
+                    type: 'Investasi',
+                    amount: product.price,
+                    detail: product.name,
+                    status: 'ACC',
+                    timestamp: Date.now()
+                });
+            });
+        }
+
+        function renderUserTable() {
+            const tbody = document.getElementById('user-history-table');
+            tbody.innerHTML = '';
+            const myTxs = dbTransactions.filter(t => t.user === currentUser.username);
+
+            if(myTxs.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" class="py-4 text-center text-slate-500 text-xs">Belum ada transaksi.</td></tr>`;
+                return;
+            }
+
+            myTxs.forEach(tx => {
+                let col = tx.status === 'Pending' ? 'text-amber-400' : (tx.status === 'ACC' ? 'text-emerald-400' : 'text-red-400');
+                tbody.innerHTML += `<tr class="border-b border-slate-800"><td class="py-3 font-mono text-xs text-slate-400">${tx.id}</td><td class="py-3">${tx.type}</td><td class="py-3 font-bold">Rp ${tx.amount.toLocaleString()}</td><td class="py-3 text-xs">${tx.detail}</td><td class="py-3 text-xs ${col}">${tx.status}</td></tr>`;
+            });
+        }
+
+        function renderAdminTable() {
+            const tbody = document.getElementById('admin-manage-table');
+            tbody.innerHTML = '';
+
+            if (dbTransactions.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="7" class="p-4 text-center text-slate-500 text-xs">Kosong.</td></tr>`;
+                return;
+            }
+
+            dbTransactions.forEach(tx => {
+                let badge = tx.status === 'Pending' ? 'text-amber-400 bg-amber-950/20' : (tx.status === 'ACC' ? 'text-emerald-400 bg-emerald-950/20' : 'text-red-400 bg-red-950/20');
+                
+                const tr = document.createElement('tr');
+                tr.className = "border-b border-slate-800";
+                tr.innerHTML = `<td class="p-3 font-mono text-xs text-slate-400">${tx.id}</td><td class="p-3 font-semibold text-amber-400">${tx.user}</td><td class="p-3">${tx.type}</td><td class="p-3 font-bold">Rp ${tx.amount.toLocaleString()}</td><td class="p-3 text-xs">${tx.detail}</td><td class="p-3"><span class="px-2 py-0.5 rounded text-xs font-bold ${badge}">${tx.status}</span></td>`;
+                
+                const tdAction = document.createElement('td');
+                tdAction.className = "p-3 flex gap-2 justify-center";
+
+                if (tx.status === 'Pending') {
+                    const btnAcc = document.createElement('button');
+                    btnAcc.className = "bg-emerald-600 px-2 py-1 rounded text-xs font-bold cursor-pointer";
+                    btnAcc.innerText = "ACC";
+                    btnAcc.addEventListener('click', () => changeStatus(tx, 'ACC'));
+
+                    const btnReject = document.createElement('button');
+                    btnReject.className = "bg-red-600 px-2 py-1 rounded text-xs font-bold cursor-pointer";
+                    btnReject.innerText = "Tolak";
+                    btnReject.addEventListener('click', () => changeStatus(tx, 'Tolak'));
+
+                    tdAction.appendChild(btnAcc);
+                    tdAction.appendChild(btnReject);
+                } else {
+                    tdAction.innerHTML = `<span class="text-xs text-gray-500 italic">Selesai</span>`;
                 }
-            },
-            "line_linked": {
-                "enable": false /* Tidak ada garis penghubung agar seperti debu */
-            },
-            "move": {
-                "enable": true,
-                "speed": 1.5, /* Kecepatan mengalir pelan */
-                "direction": "top", /* Mengalir ke atas */
-                "random": true,
-                "straight": false,
-                "out_mode": "out",
-                "bounce": false,
-                "attract": {
-                    "enable": false,
-                    "rotateX": 600,
-                    "rotateY": 1200
+
+                tr.appendChild(tdAction);
+                tbody.appendChild(tr);
+            });
+        }
+
+        function changeStatus(transaction, targetStatus) {
+            const targetUser = transaction.user;
+            const currentBalance = dbUsers[targetUser]?.balance || 0;
+
+            if (targetStatus === 'ACC') {
+                if (transaction.type === 'Deposit') {
+                    update(ref(db, `users/${targetUser}`), { balance: currentBalance + transaction.amount }).then(() => execStatusUpdate(transaction, targetStatus));
+                    return;
+                } else if (transaction.type === 'Withdrawal') {
+                    if (currentBalance < transaction.amount) { alert('Saldo user kurang!'); return; }
+                    update(ref(db, `users/${targetUser}`), { balance: currentBalance - transaction.amount }).then(() => execStatusUpdate(transaction, targetStatus));
+                    return;
                 }
             }
-        },
-        "interactivity": {
-            "detect_on": "canvas",
-            "events": {
-                "onhover": {
-                    "enable": false
-                },
-                "onclick": {
-                    "enable": false
-                },
-                "resize": true
-            }
-        },
-        "retina_detect": true
-    });
 
-    /* Script Logika Order (Sama seperti sebelumnya) */
-    function update() {
-        const h = document.getElementById('paket').value;
-        document.getElementById('totalPrice').innerText = "Rp " + parseInt(h).toLocaleString('id-ID');
-    }
+            execStatusUpdate(transaction, targetStatus);
+        }
 
-    function kirimOrder() {
-        const n = document.getElementById('nama').value;
-        const p = document.getElementById('panel_id').value;
-        const h = document.getElementById('paket').value;
-        const t = document.getElementById('paket').options[document.getElementById('paket').selectedIndex].text;
-
-        if(!n || !p || h == "0") return alert("Woi! Lengkapi dulu datanya!");
-
-        const msg = `*KONFIRMASI AKTIVASI VIP*\n` +
-                    `━━━━━━━━━━━━━━━━\n` +
-                    `👤 *User:* ${n}\n` +
-                    `🖥️ *Result Name:* ${p.toUpperCase()}\n` +
-                    `🗓️ *Package:* ${t}\n` +
-                    `💰 *Price:* Rp ${parseInt(h).toLocaleString('id-ID')}\n` +
-                    `━━━━━━━━━━━━━━━━\n` +
-                    `_Saya mau bayar & aktivasi, tolong diproses Bos Daniel!_`;
-
-        window.open(`https://wa.me/6285692069556?text=${encodeURIComponent(msg)}`, '_blank');
-    }
-</script>
-
+        function execStatusUpdate(transaction, targetStatus) {
+            update(ref(db, `transactions/${transaction.id}`), { status: targetStatus }).catch(err => alert("Gagal Update Status: " + err.message));
+        }
+    </script>
 </body>
 </html>
